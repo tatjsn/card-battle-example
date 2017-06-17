@@ -1,23 +1,32 @@
 module Action = {
   include ReactRe.Component;
+
   type props = {
-    turn: int,
+    cards: list Card.t,
+    attacks: list (int, int),
     onSelect: ReactEventRe.Mouse.t => unit,
   };
+
   let name = "Action";
-  let render {props} =>
+
+  let render { props } =>
     <div className="Action">
-      <div>
-        (ReactRe.stringToElement ("Turn:" ^ (string_of_int (props.turn + 1))))
-      </div>
-      <div>
-        <button onClick=props.onSelect>(ReactRe.stringToElement "Select1")</button>
-        <button onClick=props.onSelect>(ReactRe.stringToElement "Select2")</button>
-        <button onClick=props.onSelect>(ReactRe.stringToElement "Select3")</button>
-      </div>
+      (
+        ReactRe.listToElement(props.attacks |> List.mapi( /* map with index */
+          fun (index: int) (att: (int, int)) => {
+            let (cardIndex, attackIndex) = att;
+            let card = List.nth props.cards cardIndex;
+            let attack = List.nth card.attacks attackIndex;
+            <button
+             key=((string_of_int index) ^ card.name ^ (Card.attackString attack))
+             onClick=props.onSelect
+            >(ReactRe.stringToElement ("[" ^ card.name ^ (Card.attackString attack) ^ "]"))</button>
+          }
+        ))
+      )
     </div>;
 };
 
 include ReactRe.CreateComponent Action;
 
-let createElement ::turn ::onSelect => wrapProps {turn, onSelect};
+let createElement ::cards ::attacks ::onSelect => wrapProps { cards, attacks, onSelect };

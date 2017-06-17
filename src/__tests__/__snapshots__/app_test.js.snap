@@ -2,20 +2,15 @@
 
 exports[`src/app.re renders 1`] = `
 <div>
+  <div>
+    Turn:1
+  </div>
+  <span>
+    [Card1]
+  </span>
   <Prepare
     reasonProps={
       Array [
-        Array [
-          Array [
-            "Card1",
-            Array [
-              2,
-              0,
-            ],
-          ],
-          0,
-        ],
-        0,
         [Function],
       ]
     }
