@@ -5,7 +5,9 @@ module App = {
     | Action
     | Result;
   let name = "App";
-  type props = unit;
+  type props = {
+    cards: list Card.t,
+  };
   type state = {
     screen: screenState,
     turn: int,
@@ -22,11 +24,12 @@ module App = {
   let handleCardSelect {state} _ => {
     None;
   };
-  let render {state, updater} =>
+  let render {props, state, updater} =>
     <div>
     (
       switch state.screen {
         | Prepare => <Prepare
+                      cards=props.cards
                       turn=state.turn
                       onEnd=(updater handlePrepareEnd)
                       />
@@ -42,4 +45,4 @@ module App = {
 
 include ReactRe.CreateComponent App;
 
-let createElement = wrapProps ();
+let createElement ::cards => wrapProps { cards: cards };
