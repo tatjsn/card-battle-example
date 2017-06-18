@@ -15,7 +15,7 @@ describe "src/app.re" (fun _ => {
   });
 
   test "renders" (fun _ => {
-    let tree = App.createElement cards::cards children::[] ()
+    let tree = ReasonReact.element (App.make cards::cards [])
       |> ReactShallowRenderer.renderWithRenderer;
 
     expect tree |> toMatchSnapshot;

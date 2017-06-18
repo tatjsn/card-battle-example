@@ -1,32 +1,22 @@
-module Action = {
-  include ReactRe.Component;
+let component = ReasonReact.statelessComponent "Action";
 
-  type props = {
-    cards: list Card.t,
-    attacks: list (int, int),
-    onSelect: ReactEventRe.Mouse.t => unit,
-  };
-
-  let name = "Action";
-
-  let render { props } =>
+/* ::(cards: list Card.t) ::(attacks: list (int, int)) ::(onSelect: ReactEventRe.Mouse.t => unit) */
+let make cards::(cards: list Card.t) ::attacks ::onSelect _children => {
+  ...component,
+  render: fun () _self =>
     <div className="Action">
       (
-        ReactRe.listToElement(props.attacks |> List.mapi( /* map with index */
+        ReactRe.listToElement(attacks |> List.mapi( /* map with index */
           fun (index: int) (att: (int, int)) => {
             let (cardIndex, attackIndex) = att;
-            let card = List.nth props.cards cardIndex;
+            let card = List.nth cards cardIndex;
             let attack = List.nth card.attacks attackIndex;
             <button
              key=((string_of_int index) ^ card.name ^ (Card.attackString attack))
-             onClick=props.onSelect
+             onClick=onSelect
             >(ReactRe.stringToElement ("[" ^ card.name ^ (Card.attackString attack) ^ "]"))</button>
           }
         ))
       )
-    </div>;
+    </div>,
 };
-
-include ReactRe.CreateComponent Action;
-
-let createElement ::cards ::attacks ::onSelect => wrapProps { cards, attacks, onSelect };

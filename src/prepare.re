@@ -1,15 +1,11 @@
-module Prepare = {
-  include ReactRe.Component;
-  type props = {
-    onEnd: ReactEventRe.Mouse.t => unit,
-  };
-  let name = "Prepare";
-  let render { props } =>
+let component = ReasonReact.statelessComponent "Prepare";
+
+/* (onEnd: ReactEventRe.Mouse.t => unit) */
+let make ::onEnd _children => {
+  ...component,
+  render: fun () _self => {
     <div className="Prepare">
-      <button onClick=props.onEnd>(ReactRe.stringToElement "Attack")</button>
+      <button onClick=onEnd>(ReasonReact.stringToElement "Attack")</button>
     </div>;
+  },
 };
-
-include ReactRe.CreateComponent Prepare;
-
-let createElement ::onEnd => wrapProps { onEnd: onEnd };

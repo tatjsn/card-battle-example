@@ -11,7 +11,22 @@ exports[`src/app.re renders 1`] = `
   <Prepare
     reasonProps={
       Array [
-        [Function],
+        Array [
+          "Prepare",
+          [Function],
+          Array [
+            0,
+          ],
+          [Function],
+          [Function],
+          [Function],
+          [Function],
+          [Function],
+          [Function],
+          [Function],
+          [Function],
+          0,
+        ],
       ]
     }
   />
